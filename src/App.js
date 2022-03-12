@@ -12,16 +12,23 @@ function App() {
   const [books, setBooks] = useState([]);
   const [search, setSearch] = useState("");
 
+  useEffect(() => {
+    getBookData()
+  }, []);
+
+  const getBookData = async () => {
+    try {
+      const { data } = await axios.get("http://localhost:5000/books")
+      setBooks(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const handleChange = (e) => {
     setSearch(e.target.value);
   };
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/books")
-      .then((res) => setBooks(res.data))
-      .catch((err) => console.log(err));
-  }, [books]);
   return (
     <Router>
       <Navbar />
@@ -31,7 +38,7 @@ function App() {
           path="/books"
           element={
             books.length > 0 ? (
-              <Books books={books} search={search} />
+              <Books books={books} search={search} getBookData={getBookData} />
             ) : (
               <div className="App">
                 <h5 className="add-book1">
@@ -43,7 +50,7 @@ function App() {
           }
         />
         <Route path="/add-book" element={<AddBook />} />
-        <Route path="/books/:book_id" element= {<BookDetail/>}/>
+        <Route path="/books/:book_id" element={<BookDetail />} />
       </Routes>
     </Router>
   );

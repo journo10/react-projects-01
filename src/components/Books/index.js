@@ -2,19 +2,22 @@ import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Books = ({ books, search }) => {
+const Books = ({ books, search, getBookData }) => {
   //delete
-  const deleteBook = (id) => {
-    axios.delete(`http://localhost:5000/delete/${id}`);
+  const deleteBook = async (id) => {
+    const { data } = await axios.delete(`http://localhost:5000/delete/${id}`)
+    getBookData(data)
   };
 
   //ver
-  const lendBook = (id) => {
-    axios.put(`http://localhost:5000/lend/${id}`);
+  const lendBook = async (id) => {
+    const { data } = await axios.put(`http://localhost:5000/lend/${id}`)
+    getBookData(data)
   };
   //al
-  const backBook = (id) => {
-    axios.put(`http://localhost:5000/back/${id}`);
+  const backBook = async (id) => {
+    const { data } = await axios.put(`http://localhost:5000/back/${id}`)
+    getBookData(data)
   };
 
   return (
