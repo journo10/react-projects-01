@@ -38,7 +38,7 @@ function App() {
           path="/books"
           element={
             books.length > 0 ? (
-              <Books books={books} search={search}/>
+              <Books books={books} search={search} getBookData = {getBookData}/>
             ) : (
               <div className="App">
                 <h5 className="add-book1">
